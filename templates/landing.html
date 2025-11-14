@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}EcoBin | Главная{% endblock %}
+{% block content %}
+<section class="hero text-center">
+    <h1 class="display-4 fw-bold">EcoBin — умная система переработки</h1>
+    <p class="lead">Сканируйте QR-коды, копите баллы и обменивайте их на товары и услуги.</p>
+    <div class="mt-4">
+        <a class="btn btn-success btn-lg me-2" href="{{ url_for('register') }}">Присоединиться</a>
+        <a class="btn btn-outline-success btn-lg" href="{{ url_for('login') }}">Войти</a>
+    </div>
+</section>
+<section class="row mt-5">
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">О нас</h5>
+                <p class="card-text">Команда EcoBin развивает культуру сортировки отходов через геймификацию и умные устройства.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Как это работает</h5>
+                <p class="card-text">Сенсор Arduino определяет тип отходов, генерирует QR-код, а приложение начисляет баллы пользователю.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Маркет</h5>
+                <p class="card-text">Обменивайте накопленные баллы на полезные товары от наших партнёров.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

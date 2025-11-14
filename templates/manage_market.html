@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Управление маркетом | EcoBin{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">Добавить товар</h1>
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Название</label>
+                        <input class="form-control" type="text" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Описание</label>
+                        <textarea class="form-control" name="description" rows="4" placeholder="Опишите товар"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Цена в баллах</label>
+                        <input class="form-control" type="number" min="0" name="price" value="100" required>
+                    </div>
+                    <button class="btn btn-success" type="submit">Сохранить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="card-title">Текущие предложения</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Цена</th>
+                                <th>Добавлено</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in items %}
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.price }} баллов</td>
+                                <td>{{ item.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3" class="text-muted">Список пока пуст.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

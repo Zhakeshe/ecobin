@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Главная | EcoBin{% endblock %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="card-title">{{ greeting }}</h2>
+                <p class="card-text text-muted">Ваш текущий уровень: <strong>{{ level_info.name }}</strong> ({{ level_info.index }} из {{ LEVELS|length }}).</p>
+                <div class="progress mb-2" style="height: 20px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ (progress * 100)|round(0) }}%;">
+                        {{ (progress * 100)|round(0) }}%
+                    </div>
+                </div>
+                {% if level_info.next_threshold %}
+                    <small>До следующего уровня осталось {{ level_info.next_threshold - current_user.points }} баллов.</small>
+                {% else %}
+                    <small>Вы достигли максимального уровня. Поздравляем!</small>
+                {% endif %}
+                <hr>
+                <a class="btn btn-success me-2" href="{{ url_for('scan') }}">Сканировать QR-код</a>
+                <a class="btn btn-outline-success" href="{{ url_for('market') }}">Перейти в маркет</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h3 class="card-title">История наград</h3>
+                {% set rewards = current_user.rewards.order_by(RewardToken.redeemed_at.desc()).limit(5).all() %}
+                {% if rewards %}
+                    <ul class="list-group list-group-flush">
+                        {% for reward in rewards %}
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>{{ reward.material|capitalize }} — {{ reward.points }} баллов</span>
+                                <span class="text-muted small">{{ reward.redeemed_at.strftime('%d.%m.%Y %H:%M') }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">У вас ещё нет начисленных баллов. Сканируйте первый QR-код!</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

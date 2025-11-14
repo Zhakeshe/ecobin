@@ -1,0 +1,19 @@
+body {
+    background-color: #f5f9f5;
+}
+
+.hero {
+    padding: 4rem 0;
+}
+
+.card {
+    border: none;
+}
+
+.toast-container {
+    z-index: 2000;
+}
+
+footer {
+    margin-top: 3rem;
+}

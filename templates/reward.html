@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Награда | EcoBin{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h2 class="card-title mb-3">Награда за {{ reward.material|capitalize }}</h2>
+                <p class="lead">Стоимость: <strong>{{ reward.points }} баллов</strong></p>
+                {% if reward.redeemed %}
+                    <div class="alert alert-info">Код уже использован пользователем {{ reward.redeemed_by.username if reward.redeemed_by else 'неизвестно' }}.</div>
+                {% else %}
+                    <img class="img-fluid mb-3" src="{{ url_for('serve_qr', token=reward.token) }}" alt="QR">
+                    {% if current_user.is_authenticated %}
+                        <form method="post" action="{{ url_for('redeem_reward', token=reward.token) }}">
+                            <button class="btn btn-success" type="submit">Зачислить баллы</button>
+                        </form>
+                    {% else %}
+                        <p>Для получения баллов <a href="{{ url_for('login', next=request.url) }}">войдите в аккаунт</a>.</p>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

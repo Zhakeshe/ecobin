@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}404 | Не найдено{% endblock %}
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-4">404</h1>
+    <p class="lead">Страница не найдена или перемещена.</p>
+    <a class="btn btn-success" href="{{ url_for('landing') }}">На стартовую страницу</a>
+</div>
+{% endblock %}

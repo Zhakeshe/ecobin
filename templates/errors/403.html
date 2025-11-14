@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}403 | Нет доступа{% endblock %}
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-4">403</h1>
+    <p class="lead">У вас нет прав для просмотра этой страницы.</p>
+    <a class="btn btn-success" href="{{ url_for('dashboard') }}">Вернуться на главную</a>
+</div>
+{% endblock %}

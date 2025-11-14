@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}EcoBin{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head_scripts %}{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('landing') }}">EcoBin</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('market') }}">Маркет</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('scan') }}">Сканировать</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('profile') }}">Профиль</a></li>
+                    {% if current_user.is_admin %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('manage_market') }}">Управление</a></li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav">
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item"><span class="navbar-text me-3">Баллы: {{ current_user.points }}</span></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Выход</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Вход</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Регистрация</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+<main class="container py-4">
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                {% for category, message in messages %}
+                    <div class="toast align-items-center text-bg-{{ category if category != 'danger' else 'danger' }} border-0 show mb-2" role="alert">
+                        <div class="d-flex">
+                            <div class="toast-body">{{ message }}</div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</main>
+<footer class="bg-dark text-white text-center py-3">
+    <small>&copy; {{ datetime.utcnow().year }} EcoBin. Все права защищены.</small>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

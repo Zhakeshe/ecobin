@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Профиль | EcoBin{% endblock %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="card-title">Личные данные</h2>
+                <form method="post">
+                    <input type="hidden" name="action" value="update_info">
+                    <div class="mb-3">
+                        <label class="form-label">Имя пользователя</label>
+                        <input class="form-control" type="text" name="username" value="{{ current_user.username }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input class="form-control" type="email" name="email" value="{{ current_user.email or '' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Язык интерфейса</label>
+                        <select class="form-select" name="language">
+                            <option value="ru" {% if current_user.language == 'ru' %}selected{% endif %}>Русский</option>
+                            <option value="kz" {% if current_user.language == 'kz' %}selected{% endif %}>Қазақ</option>
+                            <option value="en" {% if current_user.language == 'en' %}selected{% endif %}>English</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-success" type="submit">Сохранить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="card-title">Изменить пароль</h2>
+                <form method="post">
+                    <input type="hidden" name="action" value="change_password">
+                    <div class="mb-3">
+                        <label class="form-label">Текущий пароль</label>
+                        <input class="form-control" type="password" name="current_password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Новый пароль</label>
+                        <input class="form-control" type="password" name="new_password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Повторите пароль</label>
+                        <input class="form-control" type="password" name="confirm_password" required>
+                    </div>
+                    <button class="btn btn-outline-success" type="submit">Обновить пароль</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

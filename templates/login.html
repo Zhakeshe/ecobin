@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Вход | EcoBin{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Вход</h2>
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Имя пользователя</label>
+                        <input class="form-control" type="text" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Пароль</label>
+                        <input class="form-control" type="password" name="password" required>
+                    </div>
+                    <button class="btn btn-success w-100" type="submit">Войти</button>
+                </form>
+                <p class="mt-3 text-center">Нет аккаунта? <a href="{{ url_for('register') }}">Регистрация</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Сканировать | EcoBin{% endblock %}
+{% block head_scripts %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.7/html5-qrcode.min.css">
+{% endblock %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="card-title">Сканировать QR-код</h2>
+                <p>Наведите камеру телефона на QR-код, полученный после сортировки отходов.</p>
+                <div id="qr-reader" class="mb-3"></div>
+                <form method="post" class="mb-3">
+                    <label class="form-label">Или введите код вручную</label>
+                    <div class="input-group">
+                        <input class="form-control" type="text" name="token" placeholder="Введите код">
+                        <button class="btn btn-success" type="submit">Начислить</button>
+                    </div>
+                </form>
+                <p class="small text-muted">При сканировании камера попросит разрешение на использование. Если сканер не доступен, воспользуйтесь ручным вводом.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h3 class="card-title">Свободные коды</h3>
+                {% if available_rewards %}
+                    <ul class="list-group list-group-flush">
+                        {% for reward in available_rewards %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>{{ reward.material|capitalize }} — {{ reward.points }} баллов</span>
+                                <a class="btn btn-outline-success btn-sm" href="{{ url_for('serve_qr', token=reward.token) }}" target="_blank">Показать QR</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">Пока нет доступных кодов. Поднесите отходы к устройству EcoBin.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.7/minified/html5-qrcode.min.js"></script>
+<script src="{{ url_for('static', filename='js/scan.js') }}"></script>
+{% endblock %}
